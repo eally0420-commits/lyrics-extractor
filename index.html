@@ -278,11 +278,11 @@
 
   <div class="section-label">모델 (정확도 vs 속도)</div>
   <select id="modelSelect">
-    <option value="Xenova/whisper-tiny">Tiny — 가장 빠름 (75MB)</option>
-    <option value="Xenova/whisper-base">Base — 균형 (145MB)</option>
-    <option value="Xenova/whisper-small" selected>Small — 높은 정확도 (465MB)</option>
-    <option value="Xenova/whisper-medium">Medium — 매우 높은 정확도 (1.5GB)</option>
-    <option value="onnx-community/whisper-large-v3-turbo">Large v3 Turbo — 최고 정확도 (1.6GB) ⭐</option>
+    <option value="Xenova/whisper-tiny">Tiny — 초고속 (75MB)</option>
+    <option value="Xenova/whisper-base" selected>Base — 빠름 + 균형 (145MB) ⭐</option>
+    <option value="Xenova/whisper-small">Small — 정확도 우선 (465MB)</option>
+    <option value="Xenova/whisper-medium">Medium — 높은 정확도 (1.5GB)</option>
+    <option value="onnx-community/whisper-large-v3-turbo">Large v3 Turbo — 최고 정확도 (1.6GB)</option>
   </select>
   <div class="model-hint">※ 모델은 브라우저에 캐시됩니다. 이후 실행은 빠릅니다. 정확도가 중요하면 Small 이상 권장.</div>
 
@@ -435,17 +435,29 @@
       const audioData = await decodeAudio(selectedFile);
       progressLabel.textContent = '가사 변환 중... (파일 길이에 따라 수분 소요)';
 
+      // 청크별 진행률 표시
+      let processedChunks = 0;
+      const totalDuration = audioData.length / 16000;
+      const chunkSize = 30;
+      const totalChunks = Math.ceil(totalDuration / chunkSize);
+
       const result = await transcriber(audioData, {
         language: lang,
         task: 'transcribe',
         chunk_length_s: 30,
         stride_length_s: 3,
         return_timestamps: false,
-        num_beams: 5,
         temperature: 0,
         condition_on_prev_tokens: true,
-        compression_ratio_threshold: 2.4,
-        no_speech_threshold: 0.6,
+        callback_function: (beams) => {
+          processedChunks++;
+          const pct = Math.min(Math.round((processedChunks / totalChunks) * 100), 99);
+          progressFill.classList.remove('indeterminate');
+          progressFill.style.width = pct + '%';
+          const elapsed = Math.round(processedChunks * chunkSize);
+          const total = Math.round(totalDuration);
+          progressLabel.textContent = `변환 중... ${pct}% (${elapsed}초 / ${total}초)`;
+        },
       });
 
       lyricsText.textContent = result.text.trim();
