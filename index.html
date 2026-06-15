@@ -189,6 +189,27 @@
     .pair-orig { font-size: 0.82rem; color: #bbb; line-height: 1.6; }
     .pair-trans { font-size: 0.93rem; color: #111; font-weight: 500; line-height: 1.75; }
 
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .lang-label { font-size: 0.76rem; color: #bbb; white-space: nowrap; }
+    .lang-btns { display: flex; gap: 6px; }
+    .lang-btn {
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #e8e8e8;
+      background: #fafafa;
+      font-size: 0.78rem;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .lang-btn:hover { background: #f0f0f0; }
+    .lang-btn.active { background: #111; color: #fff; border-color: #111; }
+
     footer { margin-top: 32px; font-size: 0.74rem; color: #ccc; }
   </style>
 </head>
@@ -205,6 +226,16 @@
     <div class="drop-icon">🎧</div>
     <div class="drop-title">파일을 끌어다 놓거나 클릭하세요</div>
     <div class="drop-sub">MP3 · WAV · M4A · FLAC · OGG · WEBM</div>
+  </div>
+
+  <div class="lang-row">
+    <span class="lang-label">음원 언어</span>
+    <div class="lang-btns">
+      <button class="lang-btn active" data-lang="auto">자동</button>
+      <button class="lang-btn" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ko">한국어</button>
+      <button class="lang-btn" data-lang="ja">日本語</button>
+    </div>
   </div>
 
   <div class="file-badge" id="fileBadge">
@@ -273,6 +304,16 @@
 
   let selectedFile = null;
   let translator   = null;
+  let selectedLang = 'auto';
+
+  // ── 언어 버튼 ──
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedLang = btn.dataset.lang;
+    });
+  });
 
   // ── 파일 선택 ──
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -342,8 +383,11 @@
       const chunkSec = 30;
       const totalChunks = Math.ceil(totalSec / chunkSec);
 
+      const lang = selectedLang === 'auto' ? null : selectedLang;
+
       const res = await transcriber(audioData, {
         task: 'transcribe',
+        language: lang,
         chunk_length_s: 30,
         stride_length_s: 4,
         return_timestamps: false,
@@ -358,6 +402,8 @@
       });
 
       lyricsText.textContent = res.text.trim();
+      // 한국어 원문이면 번역 버튼 숨김
+      translateBtn.style.display = selectedLang === 'ko' ? 'none' : '';
       result.classList.add('visible');
       barFill.style.width = '100%';
       barLabel.textContent = '완료!';
