@@ -362,6 +362,7 @@
 
     try {
       const transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-small', {
+        dtype: 'q8',
         progress_callback: (p) => {
           if (p.status === 'downloading') {
             const pct = p.total ? Math.round((p.loaded / p.total) * 100) : 0;
@@ -383,11 +384,9 @@
       const chunkSec = 30;
       const totalChunks = Math.ceil(totalSec / chunkSec);
 
-      const lang = selectedLang === 'auto' ? null : selectedLang;
-
-      const res = await transcriber(audioData, {
+      // auto일 때 language 키를 생략해야 자동감지 경고가 사라짐
+      const inferOpts = {
         task: 'transcribe',
-        language: lang,
         chunk_length_s: 30,
         stride_length_s: 4,
         return_timestamps: false,
@@ -397,12 +396,15 @@
           const pct = Math.min(Math.round((done / totalChunks) * 100), 98);
           barFill.classList.remove('pulse');
           barFill.style.width = pct + '%';
-          barLabel.textContent = `변환 중 ${pct}% · 약 ${Math.round((totalSec - done * chunkSec) / 1)}초 남음`;
+          const remSec = Math.max(0, Math.round(totalSec - done * chunkSec));
+          barLabel.textContent = `변환 중 ${pct}% · 약 ${remSec}초 남음`;
         },
-      });
+      };
+      if (selectedLang !== 'auto') inferOpts.language = selectedLang;
+
+      const res = await transcriber(audioData, inferOpts);
 
       lyricsText.textContent = res.text.trim();
-      // 한국어 원문이면 번역 버튼 숨김
       translateBtn.style.display = selectedLang === 'ko' ? 'none' : '';
       result.classList.add('visible');
       barFill.style.width = '100%';
@@ -454,6 +456,7 @@
     try {
       if (!translator) {
         translator = await pipeline('translation', 'Xenova/opus-mt-tc-big-en-ko', {
+          dtype: 'q8',
           progress_callback: (p) => {
             if (p.status === 'downloading') {
               const pct = p.total ? Math.round((p.loaded / p.total) * 100) : 0;
