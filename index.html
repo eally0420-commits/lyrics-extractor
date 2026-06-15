@@ -15,101 +15,63 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 48px 24px;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
-    header { text-align: center; margin-bottom: 40px; }
-    header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; color: #111; }
-    header p { margin-top: 8px; font-size: 0.9rem; color: #888; }
+    header { text-align: center; margin-bottom: 32px; }
+    header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; }
+    header p { margin-top: 6px; font-size: 0.85rem; color: #999; }
 
     .card {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 28px;
       width: 100%;
-      max-width: 600px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-
-    .notice {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      background: #f5f5ff;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.8rem;
-      color: #666;
-      margin-bottom: 20px;
-      line-height: 1.5;
+      max-width: 540px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     }
 
     /* Drop zone */
     .drop-zone {
       border: 2px dashed #e0e0e0;
-      border-radius: 12px;
-      padding: 40px 24px;
+      border-radius: 14px;
+      padding: 44px 20px;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      margin-bottom: 20px;
       position: relative;
+      transition: border-color 0.15s, background 0.15s;
     }
+    .drop-zone:hover { border-color: #bbb; }
     .drop-zone.dragover { border-color: #555; background: #fafafa; }
-    .drop-zone.has-file { border-color: #c8e6c9; background: #f9fff9; }
+    .drop-zone.has-file { border-color: #a5d6a7; background: #f9fff9; }
     .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .drop-icon { font-size: 2rem; margin-bottom: 10px; }
+    .drop-icon { font-size: 2.2rem; margin-bottom: 10px; }
     .drop-title { font-size: 0.95rem; font-weight: 600; color: #333; }
-    .drop-sub { font-size: 0.8rem; color: #aaa; margin-top: 4px; }
+    .drop-sub { font-size: 0.78rem; color: #bbb; margin-top: 4px; }
 
-    .file-info {
+    /* File badge */
+    .file-badge {
       display: none;
       align-items: center;
       gap: 10px;
       background: #f0f7f0;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px 14px;
-      margin-bottom: 20px;
-      font-size: 0.85rem;
+      margin-top: 12px;
+      font-size: 0.84rem;
       color: #444;
     }
-    .file-info.visible { display: flex; }
-    .file-info .filename { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
-    .file-info .remove-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 1rem; }
-    .file-info .remove-btn:hover { color: #666; }
+    .file-badge.visible { display: flex; }
+    .file-badge .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    .file-badge button { background: none; border: none; color: #bbb; cursor: pointer; font-size: 1rem; }
+    .file-badge button:hover { color: #666; }
 
-    select {
+    /* Extract button */
+    .btn-main {
+      margin-top: 16px;
       width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid #e5e5e5;
-      border-radius: 10px;
-      font-size: 0.875rem;
-      color: #333;
-      background: #fafafa;
-      outline: none;
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-      margin-bottom: 20px;
-    }
-
-    .model-hint { font-size: 0.76rem; color: #bbb; margin-top: -14px; margin-bottom: 20px; }
-
-    .btn-extract {
-      width: 100%;
-      padding: 13px;
+      padding: 14px;
       background: #111;
       color: #fff;
       border: none;
@@ -120,247 +82,194 @@
       transition: background 0.15s, transform 0.1s;
       letter-spacing: -0.01em;
     }
-    .btn-extract:hover:not(:disabled) { background: #333; }
-    .btn-extract:active:not(:disabled) { transform: scale(0.99); }
-    .btn-extract:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-main:hover:not(:disabled) { background: #333; }
+    .btn-main:active:not(:disabled) { transform: scale(0.99); }
+    .btn-main:disabled { background: #d0d0d0; cursor: not-allowed; }
 
     /* Progress */
-    .progress-wrap { display: none; margin-top: 20px; }
-    .progress-wrap.visible { display: block; }
-    .progress-bar-bg { height: 6px; background: #eee; border-radius: 99px; overflow: hidden; }
-    .progress-bar-fill {
+    .progress { display: none; margin-top: 16px; }
+    .progress.visible { display: block; }
+    .bar-bg { height: 5px; background: #eee; border-radius: 99px; overflow: hidden; }
+    .bar-fill {
       height: 100%;
       background: #111;
       border-radius: 99px;
       width: 0%;
-      transition: width 0.25s ease;
+      transition: width 0.3s;
     }
-    .progress-bar-fill.indeterminate { animation: indeterminate 1.4s ease infinite; }
-    @keyframes indeterminate {
-      0%   { margin-left: 0%; width: 30%; }
-      50%  { margin-left: 40%; width: 40%; }
-      100% { margin-left: 100%; width: 10%; }
+    .bar-fill.pulse { animation: pulse 1.2s ease infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
-    .progress-label { font-size: 0.8rem; color: #888; margin-top: 8px; text-align: center; }
+    .bar-label { font-size: 0.78rem; color: #aaa; margin-top: 7px; text-align: center; }
 
     /* Error */
-    .error-msg {
+    .error {
       display: none;
       margin-top: 14px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       background: #fff5f5;
-      border: 1.5px solid #fdd;
+      border: 1.5px solid #fcc;
       border-radius: 10px;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: #c33;
     }
-    .error-msg.visible { display: block; }
+    .error.visible { display: block; }
 
-    /* Result card */
-    .result-card {
+    /* Result */
+    .result {
       display: none;
       margin-top: 20px;
       background: #fff;
-      border-radius: 16px;
-      padding: 24px 28px;
+      border-radius: 18px;
+      padding: 24px;
       width: 100%;
-      max-width: 600px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      max-width: 540px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     }
-    .result-card.visible { display: block; }
+    .result.visible { display: block; }
 
-    .result-header {
+    .result-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .result-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #aaa; }
-    .result-actions { display: flex; gap: 8px; }
-
-    .btn-small {
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
+    .result-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #ccc; }
+    .actions { display: flex; gap: 7px; }
+    .btn-sm {
+      padding: 5px 11px;
+      border-radius: 7px;
+      font-size: 0.76rem;
       font-weight: 500;
       cursor: pointer;
-      border: 1.5px solid #e5e5e5;
+      border: 1.5px solid #e8e8e8;
       background: #fafafa;
       color: #555;
       transition: background 0.12s;
     }
-    .btn-small:hover { background: #f0f0f0; }
+    .btn-sm:hover { background: #f0f0f0; }
 
-    .block-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #bbb;
-      margin-bottom: 10px;
-    }
-
-    .lyrics-text {
-      font-size: 0.95rem;
-      line-height: 1.85;
+    .lyrics {
+      font-size: 0.93rem;
+      line-height: 1.9;
       color: #222;
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    /* Translation */
-    .divider { border: none; border-top: 1.5px solid #f0f0f0; margin: 20px 0; }
-
-    .translate-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
+    /* Translate section */
+    .divider { border: none; border-top: 1.5px solid #f2f2f2; margin: 18px 0; }
 
     .btn-translate {
-      padding: 9px 18px;
-      background: #111;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      background: #f5f5f5;
+      color: #333;
       border: none;
       border-radius: 10px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.12s;
     }
-    .btn-translate:hover { background: #333; }
-    .btn-translate:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-translate:hover { background: #ebebeb; }
+    .btn-translate:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .trans-status {
-      font-size: 0.8rem;
-      color: #aaa;
-      display: none;
-    }
+    .trans-status { font-size: 0.78rem; color: #aaa; margin-top: 10px; display: none; }
     .trans-status.visible { display: block; }
 
-    .translation-block { display: none; }
-    .translation-block.visible { display: block; }
+    .pair-block { display: none; }
+    .pair-block.visible { display: block; }
 
-    .line-pair { margin-bottom: 14px; }
-    .line-original { font-size: 0.85rem; color: #aaa; line-height: 1.6; }
-    .line-translated { font-size: 0.95rem; color: #111; font-weight: 500; line-height: 1.7; }
+    .pair { margin-bottom: 12px; }
+    .pair-orig { font-size: 0.82rem; color: #bbb; line-height: 1.6; }
+    .pair-trans { font-size: 0.93rem; color: #111; font-weight: 500; line-height: 1.75; }
 
-    footer { margin-top: 40px; font-size: 0.78rem; color: #ccc; text-align: center; }
+    footer { margin-top: 32px; font-size: 0.74rem; color: #ccc; }
   </style>
 </head>
 <body>
 
 <header>
   <h1>🎵 가사 추출기</h1>
-  <p>음원을 업로드하면 AI가 가사를 텍스트로 변환합니다</p>
+  <p>음원을 올리면 AI가 가사를 뽑아줍니다 · 완전 무료</p>
 </header>
 
 <div class="card">
-  <div class="notice">
-    <span>💡</span>
-    <span>완전 무료 · 브라우저에서 직접 실행 · 파일이 외부로 전송되지 않습니다<br>처음 실행 시 AI 모델 다운로드에 시간이 걸릴 수 있습니다</span>
-  </div>
-
-  <div class="section-label">음원 파일</div>
   <div class="drop-zone" id="dropZone">
     <input type="file" id="fileInput" accept="audio/*,.mp3,.mp4,.m4a,.wav,.webm,.flac,.ogg" />
     <div class="drop-icon">🎧</div>
     <div class="drop-title">파일을 끌어다 놓거나 클릭하세요</div>
-    <div class="drop-sub">MP3, WAV, M4A, FLAC, OGG, WEBM</div>
+    <div class="drop-sub">MP3 · WAV · M4A · FLAC · OGG · WEBM</div>
   </div>
 
-  <div class="file-info" id="fileInfo">
+  <div class="file-badge" id="fileBadge">
     <span>🎵</span>
-    <span class="filename" id="fileName"></span>
-    <button class="remove-btn" id="removeFile">✕</button>
+    <span class="name" id="fileName"></span>
+    <button id="removeFile">✕</button>
   </div>
 
-  <div class="section-label">모델 (정확도 vs 속도)</div>
-  <select id="modelSelect">
-    <option value="Xenova/whisper-tiny">Tiny — 초고속 (75MB)</option>
-    <option value="Xenova/whisper-base" selected>Base — 빠름 + 균형 (145MB) ⭐</option>
-    <option value="Xenova/whisper-small">Small — 정확도 우선 (465MB)</option>
-    <option value="Xenova/whisper-medium">Medium — 높은 정확도 (1.5GB)</option>
-    <option value="onnx-community/whisper-large-v3-turbo">Large v3 Turbo — 최고 정확도 (1.6GB)</option>
-  </select>
-  <div class="model-hint">※ 모델은 브라우저에 캐시됩니다. 이후 실행은 빠릅니다. 정확도가 중요하면 Small 이상 권장.</div>
+  <button class="btn-main" id="extractBtn" disabled>가사 추출하기</button>
 
-  <div class="section-label">언어 (선택)</div>
-  <select id="langSelect">
-    <option value="">자동 감지</option>
-    <option value="ko">한국어</option>
-    <option value="en">English</option>
-    <option value="ja">日本語</option>
-    <option value="zh">中文</option>
-    <option value="es">Español</option>
-    <option value="fr">Français</option>
-    <option value="de">Deutsch</option>
-  </select>
-
-  <button class="btn-extract" id="extractBtn" disabled>가사 추출하기</button>
-
-  <div class="progress-wrap" id="progressWrap">
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill indeterminate" id="progressFill"></div>
-    </div>
-    <div class="progress-label" id="progressLabel">준비 중...</div>
+  <div class="progress" id="progress">
+    <div class="bar-bg"><div class="bar-fill pulse" id="barFill"></div></div>
+    <div class="bar-label" id="barLabel">준비 중...</div>
   </div>
 
-  <div class="error-msg" id="errorMsg"></div>
+  <div class="error" id="errorMsg"></div>
 </div>
 
-<div class="result-card" id="resultCard">
-  <div class="result-header">
-    <span class="result-title">추출된 가사</span>
-    <div class="result-actions">
-      <button class="btn-small" id="copyBtn">복사</button>
-      <button class="btn-small" id="downloadBtn">다운로드</button>
+<div class="result" id="result">
+  <div class="result-top">
+    <span class="result-label">원문</span>
+    <div class="actions">
+      <button class="btn-sm" id="copyBtn">복사</button>
+      <button class="btn-sm" id="downloadBtn">저장</button>
     </div>
   </div>
+  <div class="lyrics" id="lyricsText"></div>
 
-  <div class="block-label">원문</div>
-  <div class="lyrics-text" id="lyricsText"></div>
+  <div class="divider"></div>
 
-  <div class="translate-row">
-    <button class="btn-translate" id="translateBtn">🌐 한국어로 번역</button>
-    <span class="trans-status" id="transStatus">번역 중...</span>
-  </div>
+  <button class="btn-translate" id="translateBtn">🌐 한국어 번역</button>
+  <div class="trans-status" id="transStatus"></div>
 
-  <div class="translation-block" id="translationBlock">
-    <hr class="divider" />
-    <div class="block-label">원문 · 번역</div>
-    <div id="pairContainer"></div>
+  <div class="pair-block" id="pairBlock">
+    <div class="divider"></div>
+    <div class="result-label" style="margin-bottom:12px;">원문 · 번역</div>
+    <div id="pairs"></div>
   </div>
 </div>
 
-<footer>브라우저에서 실행되는 Whisper AI · 완전 무료</footer>
+<footer>브라우저에서 실행 · 파일 외부 전송 없음</footer>
 
 <script type="module">
   import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/dist/transformers.min.js';
 
   env.allowLocalModels = false;
 
-  const dropZone      = document.getElementById('dropZone');
-  const fileInput     = document.getElementById('fileInput');
-  const fileInfo      = document.getElementById('fileInfo');
-  const fileName      = document.getElementById('fileName');
-  const removeFile    = document.getElementById('removeFile');
-  const modelSelect   = document.getElementById('modelSelect');
-  const langSelect    = document.getElementById('langSelect');
-  const extractBtn    = document.getElementById('extractBtn');
-  const progressWrap  = document.getElementById('progressWrap');
-  const progressFill  = document.getElementById('progressFill');
-  const progressLabel = document.getElementById('progressLabel');
-  const errorMsg      = document.getElementById('errorMsg');
-  const resultCard    = document.getElementById('resultCard');
-  const lyricsText    = document.getElementById('lyricsText');
-  const copyBtn       = document.getElementById('copyBtn');
-  const downloadBtn   = document.getElementById('downloadBtn');
-  const translateBtn  = document.getElementById('translateBtn');
-  const transStatus   = document.getElementById('transStatus');
-  const translationBlock = document.getElementById('translationBlock');
-  const pairContainer = document.getElementById('pairContainer');
+  const dropZone    = document.getElementById('dropZone');
+  const fileInput   = document.getElementById('fileInput');
+  const fileBadge   = document.getElementById('fileBadge');
+  const fileName    = document.getElementById('fileName');
+  const removeFile  = document.getElementById('removeFile');
+  const extractBtn  = document.getElementById('extractBtn');
+  const progress    = document.getElementById('progress');
+  const barFill     = document.getElementById('barFill');
+  const barLabel    = document.getElementById('barLabel');
+  const errorMsg    = document.getElementById('errorMsg');
+  const result      = document.getElementById('result');
+  const lyricsText  = document.getElementById('lyricsText');
+  const copyBtn     = document.getElementById('copyBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const translateBtn= document.getElementById('translateBtn');
+  const transStatus = document.getElementById('transStatus');
+  const pairBlock   = document.getElementById('pairBlock');
+  const pairs       = document.getElementById('pairs');
 
   let selectedFile = null;
   let translator   = null;
@@ -377,15 +286,15 @@
   removeFile.addEventListener('click', () => {
     selectedFile = null;
     fileInput.value = '';
-    fileInfo.classList.remove('visible');
+    fileBadge.classList.remove('visible');
     dropZone.classList.remove('has-file');
     extractBtn.disabled = true;
   });
 
-  function setFile(file) {
-    selectedFile = file;
-    fileName.textContent = file.name;
-    fileInfo.classList.add('visible');
+  function setFile(f) {
+    selectedFile = f;
+    fileName.textContent = f.name;
+    fileBadge.classList.add('visible');
     dropZone.classList.add('has-file');
     errorMsg.classList.remove('visible');
     extractBtn.disabled = false;
@@ -402,72 +311,59 @@
   // ── 가사 추출 ──
   extractBtn.addEventListener('click', async () => {
     errorMsg.classList.remove('visible');
-    resultCard.classList.remove('visible');
-    translationBlock.classList.remove('visible');
-    progressWrap.classList.add('visible');
-    progressFill.classList.add('indeterminate');
-    progressFill.style.width = '0%';
+    result.classList.remove('visible');
+    pairBlock.classList.remove('visible');
+    progress.classList.add('visible');
+    barFill.style.width = '0%';
+    barFill.classList.add('pulse');
+    barLabel.textContent = '모델 로딩 중...';
     extractBtn.disabled = true;
 
     try {
-      const modelId = modelSelect.value;
-      const lang    = langSelect.value || null;
-
-      progressLabel.textContent = '모델 로딩 중... (처음에만 다운로드됩니다)';
-
-      const transcriber = await pipeline('automatic-speech-recognition', modelId, {
+      const transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-small', {
         progress_callback: (p) => {
           if (p.status === 'downloading') {
             const pct = p.total ? Math.round((p.loaded / p.total) * 100) : 0;
-            progressFill.classList.remove('indeterminate');
-            progressFill.style.width = pct + '%';
-            progressLabel.textContent = `모델 다운로드 ${pct}% (${((p.total||0)/1024/1024).toFixed(0)}MB)`;
+            barFill.classList.remove('pulse');
+            barFill.style.width = pct + '%';
+            barLabel.textContent = `모델 다운로드 ${pct}%`;
           } else if (p.status === 'loading') {
-            progressFill.classList.add('indeterminate');
-            progressLabel.textContent = '모델 준비 중...';
+            barFill.classList.add('pulse');
+            barLabel.textContent = '모델 준비 중...';
           }
         }
       });
 
-      progressFill.classList.add('indeterminate');
-      progressLabel.textContent = '음원 분석 중...';
-
+      barLabel.textContent = '음원 분석 중...';
       const audioData = await decodeAudio(selectedFile);
-      progressLabel.textContent = '가사 변환 중... (파일 길이에 따라 수분 소요)';
 
-      // 청크별 진행률 표시
-      let processedChunks = 0;
-      const totalDuration = audioData.length / 16000;
-      const chunkSize = 30;
-      const totalChunks = Math.ceil(totalDuration / chunkSize);
+      const totalSec = Math.round(audioData.length / 16000);
+      let done = 0;
+      const chunkSec = 30;
+      const totalChunks = Math.ceil(totalSec / chunkSec);
 
-      const result = await transcriber(audioData, {
-        language: lang,
+      const res = await transcriber(audioData, {
         task: 'transcribe',
         chunk_length_s: 30,
-        stride_length_s: 3,
+        stride_length_s: 4,
         return_timestamps: false,
         temperature: 0,
-        condition_on_prev_tokens: true,
-        callback_function: (beams) => {
-          processedChunks++;
-          const pct = Math.min(Math.round((processedChunks / totalChunks) * 100), 99);
-          progressFill.classList.remove('indeterminate');
-          progressFill.style.width = pct + '%';
-          const elapsed = Math.round(processedChunks * chunkSize);
-          const total = Math.round(totalDuration);
-          progressLabel.textContent = `변환 중... ${pct}% (${elapsed}초 / ${total}초)`;
+        callback_function: () => {
+          done++;
+          const pct = Math.min(Math.round((done / totalChunks) * 100), 98);
+          barFill.classList.remove('pulse');
+          barFill.style.width = pct + '%';
+          barLabel.textContent = `변환 중 ${pct}% · 약 ${Math.round((totalSec - done * chunkSec) / 1)}초 남음`;
         },
       });
 
-      lyricsText.textContent = result.text.trim();
-      resultCard.classList.add('visible');
-      progressFill.style.width = '100%';
-      progressFill.classList.remove('indeterminate');
-      progressLabel.textContent = '완료!';
-      setTimeout(() => progressWrap.classList.remove('visible'), 1000);
+      lyricsText.textContent = res.text.trim();
+      result.classList.add('visible');
+      barFill.style.width = '100%';
+      barLabel.textContent = '완료!';
+      setTimeout(() => progress.classList.remove('visible'), 900);
     } catch (e) {
-      progressWrap.classList.remove('visible');
+      progress.classList.remove('visible');
       errorMsg.textContent = e.message || '오류가 발생했습니다.';
       errorMsg.classList.add('visible');
     } finally {
@@ -482,33 +378,32 @@
     setTimeout(() => copyBtn.textContent = '복사', 1800);
   });
 
-  // ── 다운로드 ──
+  // ── 저장 ──
   downloadBtn.addEventListener('click', () => {
     let content = lyricsText.textContent;
-    if (translationBlock.classList.contains('visible')) {
-      const pairs = pairContainer.querySelectorAll('.line-pair');
-      content = Array.from(pairs).map(p =>
-        (p.querySelector('.line-original')?.textContent || '') + '\n' +
-        (p.querySelector('.line-translated')?.textContent || '')
+    if (pairBlock.classList.contains('visible')) {
+      content = Array.from(pairs.querySelectorAll('.pair')).map(p =>
+        (p.querySelector('.pair-orig')?.textContent || '') + '\n' +
+        (p.querySelector('.pair-trans')?.textContent || '')
       ).join('\n\n');
     }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
-    a.download = (selectedFile ? selectedFile.name.replace(/\.[^.]+$/, '') : 'lyrics') + '_가사.txt';
+    a.download = (selectedFile?.name.replace(/\.[^.]+$/, '') || 'lyrics') + '_가사.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
-  // ── 번역 (Transformers.js, opus-mt-en-ko) ──
+  // ── 번역 ──
   translateBtn.addEventListener('click', async () => {
-    const originalText = lyricsText.textContent.trim();
-    if (!originalText) return;
+    const text = lyricsText.textContent.trim();
+    if (!text) return;
 
     translateBtn.disabled = true;
-    transStatus.textContent = '번역 모델 불러오는 중...';
+    pairBlock.classList.remove('visible');
+    pairs.innerHTML = '';
+    transStatus.textContent = '번역 모델 로딩 중...';
     transStatus.classList.add('visible');
-    translationBlock.classList.remove('visible');
-    pairContainer.innerHTML = '';
 
     try {
       if (!translator) {
@@ -523,27 +418,22 @@
       }
 
       transStatus.textContent = '번역 중...';
-
-      const lines = originalText.split('\n');
-      const translated = [];
+      const lines = text.split('\n');
 
       for (const line of lines) {
-        if (!line.trim()) { translated.push(''); continue; }
+        if (!line.trim()) continue;
         const out = await translator(line);
-        translated.push(toLyric(out[0].translation_text));
+        const t = toLyric(out[0].translation_text);
+
+        const div = document.createElement('div');
+        div.className = 'pair';
+        div.innerHTML =
+          '<div class="pair-orig">' + esc(line) + '</div>' +
+          '<div class="pair-trans">' + esc(t) + '</div>';
+        pairs.appendChild(div);
       }
 
-      lines.forEach((orig, i) => {
-        if (!orig.trim()) return;
-        const div = document.createElement('div');
-        div.className = 'line-pair';
-        div.innerHTML =
-          '<div class="line-original">' + esc(orig) + '</div>' +
-          '<div class="line-translated">' + esc(translated[i] || '') + '</div>';
-        pairContainer.appendChild(div);
-      });
-
-      translationBlock.classList.add('visible');
+      pairBlock.classList.add('visible');
     } catch (e) {
       errorMsg.textContent = '번역 오류: ' + e.message;
       errorMsg.classList.add('visible');
@@ -553,26 +443,16 @@
     }
   });
 
-  // 딱딱한 문어체 → 가사체 어미 변환
   function toLyric(t) {
     return t
-      .replace(/합니다$/,  '해')
-      .replace(/입니다$/,  '이야')
-      .replace(/있습니다$/, '있어')
-      .replace(/없습니다$/, '없어')
-      .replace(/했습니다$/, '했어')
-      .replace(/됩니다$/,  '돼')
-      .replace(/이다$/,    '이야')
-      .replace(/하였다$/,  '했어')
-      .replace(/하다$/,    '해')
-      .replace(/한다$/,    '해')
-      .replace(/된다$/,    '돼')
-      .replace(/이었다$/,  '이었어')
-      .replace(/었다$/,    '었어')
-      .replace(/았다$/,    '았어')
-      .replace(/겠다$/,    '겠어')
-      .replace(/그리고\s+/, '')
-      .replace(/\.$/, '');
+      .replace(/합니다$/, '해').replace(/입니다$/, '이야')
+      .replace(/있습니다$/, '있어').replace(/없습니다$/, '없어')
+      .replace(/했습니다$/, '했어').replace(/됩니다$/, '돼')
+      .replace(/이다$/, '이야').replace(/하였다$/, '했어')
+      .replace(/하다$/, '해').replace(/한다$/, '해')
+      .replace(/된다$/, '돼').replace(/겠다$/, '겠어')
+      .replace(/었다$/, '었어').replace(/았다$/, '았어')
+      .replace(/그리고\s+/, '').replace(/\.$/, '');
   }
 
   function esc(s) {
